@@ -17,7 +17,7 @@ public class Line {
     Color lineColour;
     Color textColour;
     String lineName;
-    String status = "*** updateStatus() not called ***";
+    String status;
 
     // Custom constructor
     public Line(String lineId) {
@@ -27,6 +27,7 @@ public class Line {
         this.lineName = constants.getLineName(id);
         this.lineColour = constants.getLineColour(id);
         this.textColour = constants.getTextColour(id);
+        this.updateStatus();
         // ...catch sets default values
     }
 

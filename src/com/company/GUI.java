@@ -8,6 +8,9 @@ public class GUI {
 
     public static void main(String[] args){
 
+        Creator creator = new Creator();
+        creator.createLines();
+
         float fontsize = 22f;
         // Custom Johnston Font
         Font johnston = Font.getFont("Ariel");
@@ -28,38 +31,33 @@ public class GUI {
 
         // Creates
 
-        for (String mode : modes) {
-            Mode modeInst = new Mode(mode);
-            modeInst.updateStatus();
-            Hashtable<String, String> lineStats = modeInst.getStatuses();
 
-            for (Map.Entry entry : lineStats.entrySet()) {
-                lineNum++;
-                JLabel name = new JLabel();
-                String id = entry.getKey().toString();
-                name.setText(constants.getLineName(id));
-                name.setFont(johnston);
-                name.setOpaque(true);
-                name.setBackground(constants.getLineColour(id));
-                name.setForeground(constants.getTextColour(id));
-                name.setHorizontalTextPosition(JLabel.CENTER);
-                name.setHorizontalAlignment(JLabel.CENTER);
+        for (String line : constants.getLineIds()) {
+            Line lineObject = creator.getLine(line);
+            lineNum++;
+            JLabel name = new JLabel();
+            name.setText(lineObject.getLineName());
+            name.setFont(johnston);
+            name.setOpaque(true);
+            name.setBackground(lineObject.getLineColour());
+            name.setForeground(lineObject.getTextColour());
+            name.setHorizontalTextPosition(JLabel.CENTER);
+            name.setHorizontalAlignment(JLabel.CENTER);
 
-                JLabel dis = new JLabel();
-                dis.setText(entry.getValue().toString());
-                dis.setFont(johnston);
-                dis.setHorizontalTextPosition(JLabel.CENTER);
-                dis.setHorizontalAlignment(JLabel.CENTER);
-
-                lineLabArray.add(name);
-                disLabArray.add(dis);
-                myFrame.add(name);
-                myFrame.add(dis);
-            }
-
-            myFrame.setLayout(new GridLayout(lineNum, 2));
+            JLabel dis = new JLabel();
+            dis.setText(lineObject.getStatus());
+            dis.setFont(johnston);
+            dis.setHorizontalTextPosition(JLabel.CENTER);
+            dis.setHorizontalAlignment(JLabel.CENTER);
+            lineLabArray.add(name);
+            disLabArray.add(dis);
+            myFrame.add(name);
+            myFrame.add(dis);
         }
-        myFrame.setVisible(true);
 
+        myFrame.setLayout(new GridLayout(lineNum, 2));
+        myFrame.setVisible(true);
     }
+
+
 }
