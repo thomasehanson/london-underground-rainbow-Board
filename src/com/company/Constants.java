@@ -9,7 +9,7 @@ public class Constants {
     private String secondaryAppKey = new String("3a877150da3642129130d60f82242bb1");
 
     private String[] lineIds = {"bakerloo", "central", "circle", "district", "hammersmith-city", "jubilee", "metropolitan",
-            "northern", "piccadilly", "victoria", "waterloo-city", "dlr", "tram", "london-overground"};
+            "northern", "piccadilly", "victoria", "waterloo-city", "dlr", "london-overground", "tram"};
 
     private String[] modes = {"tube", "dlr", "tram", "overground"};
 
@@ -99,4 +99,5 @@ public class Constants {
         names.put("tram", "Tram");
         return names.get(id);
     }
+
 }

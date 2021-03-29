@@ -3,13 +3,15 @@ import javax.swing.*;
 import java.awt.*;
 import java.io.*;
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 public class GUI {
 
-    public static void main(String[] args){
+    public static void main(String[] args) throws InterruptedException {
 
-        Creator creator = new Creator();
-        creator.createLines();
+        LineManager lineManager = new LineManager();
+        lineManager.createLines();
+        lineManager.updateAllStatuses();
 
         float fontsize = 22f;
         // Custom Johnston Font
@@ -31,32 +33,20 @@ public class GUI {
 
         // Creates
 
-
         for (String line : constants.getLineIds()) {
-            Line lineObject = creator.getLine(line);
-            lineNum++;
-            JLabel name = new JLabel();
-            name.setText(lineObject.getLineName());
-            name.setFont(johnston);
-            name.setOpaque(true);
-            name.setBackground(lineObject.getLineColour());
-            name.setForeground(lineObject.getTextColour());
-            name.setHorizontalTextPosition(JLabel.CENTER);
-            name.setHorizontalAlignment(JLabel.CENTER);
-
-            JLabel dis = new JLabel();
-            dis.setText(lineObject.getStatus());
-            dis.setFont(johnston);
-            dis.setHorizontalTextPosition(JLabel.CENTER);
-            dis.setHorizontalAlignment(JLabel.CENTER);
-            lineLabArray.add(name);
-            disLabArray.add(dis);
-            myFrame.add(name);
-            myFrame.add(dis);
+            JLabel nameLabel = lineManager.getLabelById("name", line);
+            JLabel statusLabel = lineManager.getLabelById("status", line);
+            myFrame.add(nameLabel);
+            myFrame.add(statusLabel);
         }
 
         myFrame.setLayout(new GridLayout(lineNum, 2));
         myFrame.setVisible(true);
+
+        while(true){
+            lineManager.updateAllStatuses();
+            TimeUnit.MINUTES.sleep(5);
+        }
     }
 
 
